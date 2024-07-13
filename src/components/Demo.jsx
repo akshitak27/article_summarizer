@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
-import { useLazyGetSummaryQuery } from "../services/article";
+import { fetchArticleData, useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
   const [article, setArticle] = useState({ url: "", summary: "" });
@@ -25,7 +25,8 @@ const Demo = () => {
     }
 
     try {
-      const { data } = await getSummary({ articleUrl: article.url });
+      // const { data } = await getSummary({ articleUrl: article.url });
+      const { data } = await fetchArticleData(article.url);
       if (data?.summary) {
         const newArticle = { ...article, summary: data.summary };
         const updatedAllArticles = [newArticle, ...allArticles];
