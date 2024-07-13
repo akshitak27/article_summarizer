@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
+import axios from 'axios';
 const rapidApiKey = import.meta.env.VITE_RAPID_API_ARTICLE_KEY;
 
 export const articleApi = createApi({
@@ -21,5 +21,29 @@ export const articleApi = createApi({
         }),
     }),
 })
+
+export const fetchArticleData = async (uri) => {
+    console.log(uri);
+    const options = {
+        method: 'GET',
+        url: 'https://article-extractor-and-summarizer.p.rapidapi.com/summarize',
+        params: {
+            url: uri,
+            lang: 'en',
+            engine: '2'
+        },
+        headers: {
+            'x-rapidapi-key': rapidApiKey,
+            'x-rapidapi-host': 'article-extractor-and-summarizer.p.rapidapi.com'
+        }
+    };
+    try {
+        const response = await axios.request(options);
+        console.log(response.data);
+        return response;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export const { useLazyGetSummaryQuery } = articleApi
