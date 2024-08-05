@@ -7,7 +7,7 @@ export const Hero = () => {
       <nav className="flex justify-between items-center w-full mb-10 pt-3">
         <img src={groovz} alt="logo" className="w-29 h-16 "/>
         <button type="button" 
-        onClick={ ()=> window.open("https://github.com/akshitak27")
+        onClick={ ()=> window.open("https://github.com/akshitak27/article_summarizer")
           }
         className="black_btn">Github</button>
       </nav>
