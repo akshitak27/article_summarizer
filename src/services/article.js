@@ -24,26 +24,25 @@ export const articleApi = createApi({
 
 export const fetchArticleData = async (uri) => {
     console.log(uri);
+
+
+    const url = `https://article-extractor-and-summarizer.p.rapidapi.com/summarize?url=${uri}&lang=en&engine=2`;
     const options = {
         method: 'GET',
-        url: 'https://article-extractor-and-summarizer.p.rapidapi.com/summarize',
-        params: {
-            url: uri,
-            lang: 'en',
-            engine: '2'
-        },
         headers: {
             'x-rapidapi-key': rapidApiKey,
             'x-rapidapi-host': 'article-extractor-and-summarizer.p.rapidapi.com'
         }
     };
+
     try {
-        const response = await axios.request(options);
-        console.log(response.data);
-        return response;
+        const response = await fetch(url, options);
+        const result = await response.text();
+        console.log(result);
+        return result;
     } catch (error) {
         console.error(error);
     }
 }
 
-export const { useLazyGetSummaryQuery } = articleApi
+export const { useLazyGetSummaryQuery } = articleApi;

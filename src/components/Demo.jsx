@@ -6,7 +6,9 @@ const Demo = () => {
   const [article, setArticle] = useState({ url: "", summary: "" });
   const [allArticles, setAllArticles] = useState([]);
   const [copied, setCopied] = useState("");
-  const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
+  // const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
+  const [isFetching, setFetching] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const articlesFromLocalStorage = JSON.parse(localStorage.getItem("articles"));
@@ -26,9 +28,14 @@ const Demo = () => {
 
     try {
       // const { data } = await getSummary({ articleUrl: article.url });
-      const { data } = await fetchArticleData(article.url);
-      if (data?.summary) {
-        const newArticle = { ...article, summary: data.summary };
+      setFetching(true);
+      const result = await fetchArticleData(article.url);
+      setFetching(false);
+      const response = JSON.parse(result);
+      console.log(response);
+      console.log(response.summary);
+      if (response) {
+        const newArticle = { ...article, summary: response.summary };
         const updatedAllArticles = [newArticle, ...allArticles];
         setArticle(newArticle);
         setAllArticles(updatedAllArticles);
